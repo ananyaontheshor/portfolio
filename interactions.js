@@ -147,9 +147,19 @@
         head.setAttribute('aria-expanded','false');
       } else {
         query.classList.add('open');
+        // reset any active tilt transform before measuring height, so perspective() doesn't distort scrollHeight
+        query.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateZ(0)';
         body.style.maxHeight = body.scrollHeight + 'px';
         head.setAttribute('aria-expanded','true');
       }
+    });
+  });
+
+  // ---------- recalc open accordion height on window resize (text reflow changes scrollHeight) ----------
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.query.open').forEach(q => {
+      const body = q.querySelector('.query-body');
+      body.style.maxHeight = body.scrollHeight + 'px';
     });
   });
 })();

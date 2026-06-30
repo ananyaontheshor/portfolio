@@ -51,6 +51,14 @@
     position:fixed; inset:0; z-index:1; pointer-events:none;
     background:radial-gradient(ellipse at center, transparent 30%, rgba(13,15,18,0.55) 100%);
   }
+  .section-glow{
+    position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:0.5;
+  }
+  #about .section-glow{background:radial-gradient(ellipse 700px 500px at 20% 20%, rgba(124,152,133,0.10), transparent 70%);}
+  #projects .section-glow{background:radial-gradient(ellipse 800px 600px at 80% 30%, rgba(201,120,92,0.09), transparent 70%);}
+  #writing .section-glow{background:radial-gradient(ellipse 700px 500px at 15% 60%, rgba(124,152,133,0.08), transparent 70%);}
+  #path .section-glow{background:radial-gradient(ellipse 700px 600px at 85% 40%, rgba(201,120,92,0.08), transparent 70%);}
+  #contact .section-glow{background:radial-gradient(ellipse 800px 500px at 50% 50%, rgba(124,152,133,0.12), transparent 70%);}
 
   /* content sits above canvas */
   .content{position:relative; z-index:2;}
@@ -201,6 +209,11 @@
     transition:transform 0.15s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
   .query:hover{border-color:var(--sage); box-shadow:0 25px 50px -20px rgba(124,152,133,0.25);}
+  .query.open{border-color:var(--sage); box-shadow:0 25px 60px -25px rgba(124,152,133,0.3);}
+  .stat-strip{display:flex; gap:1.5rem; flex-wrap:wrap; margin:1rem 0 1.3rem; padding:1rem 1.2rem; background:rgba(124,152,133,0.06); border:1px solid rgba(124,152,133,0.18); border-radius:8px;}
+  .stat{display:flex; flex-direction:column; gap:0.2rem;}
+  .stat-num{font-family:var(--mono); font-size:1.3rem; font-weight:700; color:var(--sage);}
+  .stat-label{font-family:var(--mono); font-size:0.68rem; color:var(--text-dim); letter-spacing:0.02em;}
   .query-head{
     width:100%; text-align:left; background:none; border:none; cursor:pointer;
     padding:1.4rem 1.6rem; display:flex; justify-content:space-between; align-items:center; gap:1rem;
@@ -302,7 +315,7 @@
   </h1>
   <p class="hero-sub" id="hero-sub">
     pgdm — big data analytics, goa institute of management. currently a <strong>product management intern at CredgeSol.ai</strong>,
-    building governance tooling for AI decision systems. previously law, before that words.
+    presenting AI governance tooling to internal stakeholders. previously law, before that words.
   </p>
   <div class="quickcmds" id="hero-cmds">
     <button data-cmd="projects">→ see what i've built</button>
@@ -313,21 +326,25 @@
 </section>
 
 <section id="about">
+  <div class="section-glow"></div>
   <div class="section-marker">01 — about</div>
   <div class="eyebrow reveal">01 / about</div>
   <h2 class="reveal">law, data, and the gap between them</h2>
   <div class="about-grid">
     <div class="about-text reveal">
       <p>
-        i started with a <strong>BBA LLB</strong>, which taught me to read systems for where they break:
-        ambiguity, loopholes, the gap between what a rule says and what it does. then i moved into
-        <strong>data and analytics</strong>, because i wanted to build the systems, not just argue about them.
+        i started with a <strong>BBA LL.B</strong> from Army Law College, Pune, which taught me to
+        read systems for where they break: ambiguity, loopholes, the gap between what a rule says
+        and what it does. then i moved into <strong>data and analytics</strong>, because i wanted
+        to build the systems, not just argue about them.
       </p>
       <p>
-        that combination is unusual, and i've learned to treat it as the point rather than the
-        complication. at CredgeSol.ai, an AI decision governance startup, i work on the
-        <strong>Credge Clarity Engine</strong> — explaining and presenting how AI decisions should be
-        made legible to the people affected by them.
+        that pivot showed up fastest at <strong>Tata nexarc</strong>, where a 5-month marketing
+        analytics internship had me automating cohort revenue pipelines across 5,700+ transaction
+        records, building churn models from logistics data, and consolidating 50+ campaign KPIs
+        into self-updating dashboards. currently i'm a <strong>product management intern at
+        CredgeSol.ai</strong>, an AI decision governance startup, presenting the Credge Clarity
+        Engine pitch to internal stakeholders.
       </p>
       <p>
         outside of work i write, take photographs, paint badly on purpose, and occasionally publish
@@ -339,44 +356,55 @@
       <div class="fact-row"><span class="k">based in</span><span class="v">chandigarh, india</span></div>
       <div class="fact-row"><span class="k">currently</span><span class="v">PM intern, CredgeSol.ai</span></div>
       <div class="fact-row"><span class="k">education</span><span class="v">PGDM, big data analytics — GIM</span></div>
-      <div class="fact-row"><span class="k">earlier degree</span><span class="v">BBA LLB</span></div>
-      <div class="fact-row"><span class="k">tools</span><span class="v">SQL, Python, Excel, Power BI</span></div>
+      <div class="fact-row"><span class="k">earlier degree</span><span class="v">BBA LL.B — Army Law College, Pune</span></div>
+      <div class="fact-row"><span class="k">tools</span><span class="v">Python, SQL, Tableau, Power BI, Excel</span></div>
       <div class="fact-row"><span class="k">also does</span><span class="v">writing, photography, painting</span></div>
     </div>
   </div>
 </section>
 
 <section id="projects">
+  <div class="section-glow"></div>
   <div class="section-marker">02 — projects</div>
   <div class="eyebrow reveal">02 / projects</div>
   <h2 class="reveal">things i've shipped</h2>
-  <p class="section-intro reveal">three projects, expanded below. each one sits at a different point of the law/data/product triangle. hover for a little tilt.</p>
+  <p class="section-intro reveal">four projects, expanded below. each one sits at a different point of the law/data/product triangle. hover for a little tilt.</p>
 
   <div class="reveal-stagger">
   <div class="query" id="q1">
     <button class="query-head" aria-expanded="false" aria-controls="q1-body">
       <div class="ql-left">
-        <span class="query-name">credge clarity engine</span>
-        <span class="query-tagline">making AI decisions explainable to the people they affect</span>
-        <div class="query-tags"><span class="tag">product</span><span class="tag">ai governance</span><span class="tag">internal pitch</span></div>
+        <span class="query-name">does price determine what gets read?</span>
+        <span class="query-tagline">kindle marketplace discoverability analysis — 133k book listings</span>
+        <div class="query-tags"><span class="tag">data analysis</span><span class="tag">market research</span><span class="tag">tableau</span></div>
       </div>
       <span class="chevron">›</span>
     </button>
     <div class="query-body" id="q1-body">
       <div class="query-body-inner">
+        <div class="stat-strip">
+          <div class="stat"><span class="stat-num">133k</span><span class="stat-label">listings analyzed</span></div>
+          <div class="stat"><span class="stat-num">5x</span><span class="stat-label">higher bestseller rate, KU titles</span></div>
+          <div class="stat"><span class="stat-num">25x</span><span class="stat-label">more reviews, KU vs paid</span></div>
+          <div class="stat"><span class="stat-num">47%</span><span class="stat-label">of listings have zero reviews</span></div>
+        </div>
         <p>
-          at CredgeSol.ai, i'm building and presenting the Credge Clarity Engine deck to internal
-          stakeholders and external audiences. the product addresses a real gap: companies deploying
-          AI decision systems often can't explain, in plain language, why a system decided what it
-          decided. my work covers the pitch narrative, stakeholder messaging, and a research spotlight
-          slide drawing on independent work i co-authored on AI governance.
+          a self-directed analysis of 133,000+ Amazon Kindle book listings, examining whether
+          pricing model — Kindle Unlimited status, price tier, and genre — structurally determines
+          discoverability. it does: KU titles significantly outperform paid titles on bestseller
+          rank and reader engagement across every genre category, while titles priced over $15 are
+          effectively invisible to algorithmic discovery.
         </p>
         <p>
-          the hardest part of this hasn't been the deck itself — it's been keeping a clean line
-          between the product and my own research, so the pitch never overstates what's been built
-          versus what's been studied.
+          the more interesting finding was the shape of the system underneath that gap: a two-track
+          discovery model where algorithmic ranking favors low-cost titles while editorial curation
+          skews toward premium content — creating a structural disadvantage for independent and
+          niche authors regardless of quality.
         </p>
-        <div class="stack">role: product management intern · stage: internal v7, early days</div>
+        <div class="stack">tools: Python, pandas, matplotlib, seaborn, Tableau · dataset: Kaggle, 2023</div>
+        <div class="query-links">
+          <a href="https://public.tableau.com/app/profile/ananya.mittal8556/viz/KindleMarketplaceDiscoverabilityAnalysis/Dashboard1?publish=yes" target="_blank" rel="noopener">view interactive dashboard →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -385,27 +413,68 @@
     <button class="query-head" aria-expanded="false" aria-controls="q2-body">
       <div class="ql-left">
         <span class="query-name">nyayaai</span>
-        <span class="query-tagline">multi-agent legal research, live and deployed</span>
-        <div class="query-tags"><span class="tag">legaltech</span><span class="tag">multi-agent</span><span class="tag">live product</span></div>
+        <span class="query-tagline">agentic legal research platform — Claude API + MCP</span>
+        <div class="query-tags"><span class="tag">legaltech</span><span class="tag">agentic ai</span><span class="tag">live product</span></div>
       </div>
       <span class="chevron">›</span>
     </button>
     <div class="query-body" id="q2-body">
       <div class="query-body-inner">
+        <div class="stat-strip">
+          <div class="stat"><span class="stat-num">5L+</span><span class="stat-label">documents indexed</span></div>
+          <div class="stat"><span class="stat-num">5</span><span class="stat-label">specialised agent endpoints</span></div>
+          <div class="stat"><span class="stat-num">4</span><span class="stat-label">source types: SC, HC, SEBI, RBI</span></div>
+        </div>
         <p>
-          NyayaAI is a multi-agent legal research platform i built and deployed, covering Indian court
-          judgments, SEBI orders, and RBI notifications, alongside AI-powered contract review and
-          compliance checks. the legal background did the heavy lifting here: knowing what a lawyer
-          actually needs from a research tool, versus what a generic search wrapper gives them.
+          existing MCP connectors for Indian legal data exposed 5 lakh+ documents across the
+          Supreme Court, High Courts, SEBI, and RBI — but offered no reasoning or synthesis layer
+          for practitioners. NyayaAI is my answer: an agentic legal research platform built on the
+          Claude API and MCP, with five specialised agent endpoints for case law search, document
+          retrieval, judgment analysis, compliance checking, and act-to-judgment correlation, each
+          routing through Claude to a legal data hunter MCP.
         </p>
         <p>
-          it's live and queryable, not a slide deck. that distinction matters to me — i wanted to
-          ship something a lawyer could actually open and use.
+          built and deployed full-stack using Claude Code as an agentic coding assistant, with PDF
+          and DOCX ingestion support and structured, source-cited outputs from plain language
+          queries. the legal background did the heavy lifting on architecture: knowing what a
+          lawyer actually needs from a research tool, versus what a generic search wrapper gives them.
         </p>
-        <div class="stack">stack: multi-agent architecture, deployed on Railway</div>
+        <div class="stack">stack: Claude API, MCP, Claude Code · deployed on Railway</div>
         <div class="query-links">
           <a href="https://nyayaai.up.railway.app" target="_blank" rel="noopener">visit nyayaai →</a>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="query" id="q4">
+    <button class="query-head" aria-expanded="false" aria-controls="q4-body">
+      <div class="ql-left">
+        <span class="query-name">predicting MSME churn from logistics signals</span>
+        <span class="query-tagline">churn risk scoring built on Tata nexarc shipment data</span>
+        <div class="query-tags"><span class="tag">data science</span><span class="tag">logistic regression</span><span class="tag">power bi</span></div>
+      </div>
+      <span class="chevron">›</span>
+    </button>
+    <div class="query-body" id="q4-body">
+      <div class="query-body-inner">
+        <div class="stat-strip">
+          <div class="stat"><span class="stat-num">9.5k+</span><span class="stat-label">shipment records</span></div>
+          <div class="stat"><span class="stat-num">3</span><span class="stat-label">primary churn signals identified</span></div>
+        </div>
+        <p>
+          built during my Tata nexarc internship: engineered features across SLA compliance, LSP
+          (logistics service provider) performance, order sequence, and key account status from
+          9,500+ anonymised B2B logistics shipment records. trained a logistic regression classifier
+          to predict churn, and identified first-order customers, SLA non-compliance, and LSP
+          selection as the primary signals driving monthly reorder behaviour.
+        </p>
+        <p>
+          the output wasn't just a model — it was a Power BI dashboard visualising customer-level
+          churn risk scores with LSP-level performance breakdowns and early-intervention
+          recommendations for new customer onboarding, meant to be used by the team, not just read once.
+        </p>
+        <div class="stack">tools: Python, scikit-learn, Power BI · source: Tata nexarc internship data</div>
       </div>
     </div>
   </div>
@@ -442,6 +511,7 @@
 </section>
 
 <section id="writing">
+  <div class="section-glow"></div>
   <div class="section-marker">03 — writing</div>
   <div class="eyebrow reveal">03 / writing</div>
   <h2 class="reveal">words, separate from the work</h2>
@@ -449,8 +519,8 @@
 
   <div class="writing-list reveal-stagger">
     <div class="writing-item">
-      <span class="wt">AI governance research — co-authored with Mainak Roy, PwC AI Governance Competition</span>
-      <span class="wd">national semifinal</span>
+      <span class="wt">"the intersection of data governance and artificial intelligence" — co-authored, PwC Whitepaper Challenge 4.0</span>
+      <span class="wd">top 17 semifinalists</span>
     </div>
     <div class="writing-item">
       <span class="wt">poetry — formerly published on a public poetry page</span>
@@ -464,6 +534,7 @@
 </section>
 
 <section id="path">
+  <div class="section-glow"></div>
   <div class="section-marker">04 — path</div>
   <div class="eyebrow reveal">04 / path</div>
   <h2 class="reveal">how i got here</h2>
@@ -472,7 +543,13 @@
       <div class="tl-date">2026 — present</div>
       <div class="tl-role">product management intern</div>
       <div class="tl-org">CredgeSol.ai</div>
-      <div class="tl-desc">building and presenting the Credge Clarity Engine pitch to internal and external stakeholders.</div>
+      <div class="tl-desc">presenting the Credge Clarity Engine pitch deck to internal product stakeholders.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">apr — aug 2025</div>
+      <div class="tl-role">marketing analytics & SEO intern</div>
+      <div class="tl-org">Tata nexarc</div>
+      <div class="tl-desc">automated cohort revenue pipelines and churn models across 5,700+ transaction records; consolidated 50+ campaign KPIs into self-updating dashboards.</div>
     </div>
     <div class="tl-item">
       <div class="tl-date">2024 — 2026</div>
@@ -481,30 +558,26 @@
       <div class="tl-desc">pivoted from law into data and analytics.</div>
     </div>
     <div class="tl-item">
-      <div class="tl-date">earlier</div>
-      <div class="tl-role">marketing analytics intern</div>
-      <div class="tl-org">Tata nexarc</div>
-      <div class="tl-desc">built self-updating cohort dashboards, LTV analysis, and campaign analytics.</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-date">earliest</div>
-      <div class="tl-role">BBA LLB</div>
-      <div class="tl-org">undergraduate</div>
+      <div class="tl-date">2018 — 2023</div>
+      <div class="tl-role">BBA LL.B</div>
+      <div class="tl-org">Army Law College, Pune</div>
       <div class="tl-desc">where the systems-thinking habit started.</div>
     </div>
   </div>
 </section>
 
 <section id="contact">
+  <div class="section-glow"></div>
   <div class="section-marker">05 — contact</div>
   <div class="eyebrow reveal">05 / contact</div>
   <h2 class="reveal">say hello</h2>
   <div class="contact reveal">
-    <div class="contact-cmd"><span class="prompt">$</span> ./reach_ananya.sh</div>
+    <div class="contact-cmd"><span class="prompt">$</span> get in touch</div>
     <div class="contact-links">
-      <a href="mailto:hello@ananyaontheshor.example" target="_blank" rel="noopener">email</a>
+      <a href="mailto:ananyamittal88@gmail.com" target="_blank" rel="noopener">email</a>
+      <a href="tel:+919359035372" target="_blank" rel="noopener">phone</a>
       <a href="https://github.com/ananyaontheshor" target="_blank" rel="noopener">github</a>
-      <a href="#" target="_blank" rel="noopener">linkedin</a>
+      <a href="https://www.linkedin.com/in/ananyamittal2000/" target="_blank" rel="noopener">linkedin</a>
     </div>
   </div>
 </section>
