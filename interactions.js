@@ -7,10 +7,10 @@
   const loaderFill = document.getElementById('loader-fill');
   let progress = 0;
   const loaderInterval = setInterval(() => {
-    progress += Math.random() * 18;
+    progress += Math.random() * 20;
     if(progress > 92) progress = 92;
     loaderFill.style.width = progress + '%';
-  }, 90);
+  }, 80);
 
   function finishLoading(){
     clearInterval(loaderInterval);
@@ -18,67 +18,58 @@
     setTimeout(() => {
       loader.classList.add('hidden');
       runHeroIntro();
-    }, 280);
+    }, 250);
   }
 
   if(window.__sceneReady){
-    setTimeout(finishLoading, 400);
+    setTimeout(finishLoading, 350);
   } else {
-    document.addEventListener('scene-ready', () => setTimeout(finishLoading, 400));
-    // fallback in case scene takes too long or fails
-    setTimeout(finishLoading, 2200);
+    document.addEventListener('scene-ready', () => setTimeout(finishLoading, 350));
+    setTimeout(finishLoading, 1800); // fallback
   }
 
-  // ---------- hero intro sequence ----------
+  // ---------- hero intro ----------
   function runHeroIntro(){
     const eyebrow = document.getElementById('hero-eyebrow');
-    const titleSpans = document.querySelectorAll('.hero-title .line span');
-    const sub = document.getElementById('hero-sub');
+    const kicker = document.getElementById('hero-kicker');
+    const wrap = document.getElementById('console-wrap');
     const cmds = document.getElementById('hero-cmds');
     const cue = document.getElementById('scroll-cue');
 
     if(reducedMotion){
-      [eyebrow, sub, cmds, cue].forEach(el => { if(el){ el.style.opacity=1; el.style.transform='none'; }});
-      titleSpans.forEach(s => { s.style.opacity=1; s.style.transform='none'; });
+      [eyebrow, kicker, cmds].forEach(el => { if(el){ el.style.opacity=1; el.style.transform='none'; }});
+      wrap.classList.add('in');
+      if(cue) cue.style.opacity = 1;
       return;
     }
 
-    eyebrow.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    setTimeout(() => { eyebrow.style.opacity = 1; eyebrow.style.transform = 'translateY(0)'; }, 100);
-
-    titleSpans.forEach((span, i) => {
-      span.style.transition = 'opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1)';
-      setTimeout(() => { span.style.opacity = 1; span.style.transform = 'translateY(0)'; }, 350 + i*150);
-    });
-
-    sub.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-    setTimeout(() => { sub.style.opacity = 1; sub.style.transform = 'translateY(0)'; }, 750);
-
-    cmds.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    setTimeout(() => { eyebrow.style.opacity = 1; eyebrow.style.transform = 'translateY(0)'; }, 80);
+    setTimeout(() => { kicker.style.opacity = 1; kicker.style.transform = 'translateY(0)'; }, 200);
+    setTimeout(() => { wrap.classList.add('in'); }, 350);
     setTimeout(() => { cmds.style.opacity = 1; cmds.style.transform = 'translateY(0)'; }, 950);
-
-    cue.style.transition = 'opacity 0.8s ease';
-    setTimeout(() => { cue.style.opacity = 1; }, 1300);
+    setTimeout(() => { if(cue) cue.style.opacity = 1; }, 1300);
+    setTimeout(() => { if(window.__focusTerminal && window.innerWidth > 760) window.__focusTerminal(); }, 1400);
   }
 
-  // ---------- quick command buttons ----------
+  // ---------- quick command buttons -> real terminal ----------
   document.querySelectorAll('.quickcmds button').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      const target = document.getElementById(btn.dataset.cmd);
-      if(target) target.scrollIntoView({behavior: reducedMotion ? 'auto' : 'smooth'});
+      const cmd = btn.dataset.run;
+      if(cmd && window.__runTerminalCommand){
+        window.__runTerminalCommand(cmd);
+        document.getElementById('console-wrap').scrollIntoView({behavior: reducedMotion ? 'auto' : 'smooth', block:'center'});
+        if(window.__focusTerminal) window.__focusTerminal();
+      }
     });
   });
 
-  // ---------- nav background on scroll + active link ----------
+  // ---------- nav scroll state + progress bar ----------
   const navbar = document.getElementById('navbar');
   const progressBar = document.getElementById('scroll-progress');
-  const sectionEls = ['hero','about','projects','writing','path','contact']
-    .map(id => document.getElementById(id)).filter(Boolean);
 
   function onScroll(){
     const sc = window.scrollY;
     navbar.classList.toggle('scrolled', sc > 40);
-
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const pct = docHeight > 0 ? (sc / docHeight) * 100 : 0;
     progressBar.style.width = pct + '%';
@@ -86,7 +77,7 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // ---------- scroll reveal via IntersectionObserver ----------
+  // ---------- scroll reveal ----------
   const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
   if('IntersectionObserver' in window){
     const io = new IntersectionObserver((entries) => {
@@ -100,15 +91,6 @@
     revealEls.forEach(el => io.observe(el));
   } else {
     revealEls.forEach(el => el.classList.add('in-view'));
-  }
-
-  // ---------- cursor glow ----------
-  const glow = document.getElementById('cursor-glow');
-  if(glow){
-    window.addEventListener('mousemove', (e) => {
-      glow.style.left = e.clientX + 'px';
-      glow.style.top = e.clientY + 'px';
-    }, { passive: true });
   }
 
   // ---------- project card 3D tilt ----------
@@ -147,7 +129,6 @@
         head.setAttribute('aria-expanded','false');
       } else {
         query.classList.add('open');
-        // reset any active tilt transform before measuring height, so perspective() doesn't distort scrollHeight
         query.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateZ(0)';
         body.style.maxHeight = body.scrollHeight + 'px';
         head.setAttribute('aria-expanded','true');
@@ -155,7 +136,6 @@
     });
   });
 
-  // ---------- recalc open accordion height on window resize (text reflow changes scrollHeight) ----------
   window.addEventListener('resize', () => {
     document.querySelectorAll('.query.open').forEach(q => {
       const body = q.querySelector('.query-body');
